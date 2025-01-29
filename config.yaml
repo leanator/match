@@ -1,0 +1,3 @@
+database:
+  type: "memory"  # "memory" para BD volátil, "sqlite" para BD persistente
+  path: "app.db"  # Si es "sqlite", define la ruta

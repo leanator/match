@@ -1,0 +1,44 @@
+{
+    "preguntas": [
+        {
+            "texto": "¿Te gustan los videojuegos?",
+            "categoria": "entretenimiento",
+            "nivel": "bajo",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Prefieres el cine a la televisión?",
+            "categoria": "entretenimiento",
+            "nivel": "medio",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        }
+    ]
+}
