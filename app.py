@@ -1,9 +1,13 @@
-from flask import Flask, render_template, request, redirect, g
+from flask import Flask, render_template, request, redirect, g, session
+from auth import auth
+
 import sqlite3
 import json
 import random
 
 app = Flask(__name__)
+app.secret_key = "clave_secreta_super_segura"  # Cambiar por algo seguro en producción
+app.register_blueprint(auth)
 
 # Conexión a la base de datos (archivo temporal persistente durante la ejecución)
 def get_db_connection():
@@ -28,44 +32,47 @@ def load_questions():
 import os
 import json
 import os
-
 def initialize_db():
-    with app.app_context():  # Asegurar que la BD se inicializa en el contexto de Flask
+    with app.app_context():
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        # Verificar si la tabla 'preguntas' existe
-        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='preguntas';")
-        table_exists = cursor.fetchone()
+        # Crear la tabla de usuarios si no existe
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS usuarios (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nombre TEXT UNIQUE NOT NULL,
+            password_hash TEXT NOT NULL
+        );
+        """)
 
-        # Si la tabla no existe, la creamos
-        if not table_exists:
-            cursor.execute("""
-            CREATE TABLE preguntas (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                texto TEXT NOT NULL,
-                categoria TEXT NOT NULL,
-                nivel TEXT NOT NULL,
-                estado TEXT CHECK(estado IN ('activa', 'editada', 'eliminada')) DEFAULT 'activa',
-                origen TEXT CHECK(origen IN ('predefinida', 'generada'))
-            );
-            """)
+        # Crear la tabla de preguntas si no existe
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS preguntas (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            texto TEXT NOT NULL,
+            categoria TEXT NOT NULL,
+            nivel TEXT NOT NULL,
+            estado TEXT CHECK(estado IN ('activa', 'editada', 'eliminada')) DEFAULT 'activa',
+            origen TEXT CHECK(origen IN ('predefinida', 'generada'))
+        );
+        """)
 
-        # Verificar si la tabla está vacía
-        cursor.execute("SELECT COUNT(*) FROM preguntas")
-        if cursor.fetchone()[0] == 0:
-            json_path = os.path.join("data", "questions_data.json")
-            if os.path.exists(json_path):
-                with open(json_path, "r", encoding="utf-8") as file:
-                    preguntas_json = json.load(file).get("preguntas", [])
-
-                for pregunta in preguntas_json:
-                    cursor.execute(
-                        "INSERT INTO preguntas (texto, categoria, nivel, estado, origen) VALUES (?, ?, ?, ?, ?)",
-                        (pregunta["texto"], pregunta["categoria"], pregunta["nivel"], pregunta["estado"], "predefinida")
-                    )
+        # Crear la tabla de respuestas si no existe
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS respuestas (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            pregunta_id INTEGER,
+            usuario_id INTEGER,
+            texto TEXT NOT NULL,
+            valor INTEGER NOT NULL,
+            FOREIGN KEY (pregunta_id) REFERENCES preguntas(id),
+            FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+        );
+        """)
 
         conn.commit()
+
 
 
 
@@ -161,13 +168,8 @@ def results():
 
 
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        # Aquí puedes implementar la lógica de inicio de sesión
-        # Por ahora solo redirigimos a '/questions'
-        return redirect('/questions')
-    return render_template('login.html')  # Renderiza un archivo login.html (puedes personalizarlo luego)
+
+
 
 @app.teardown_appcontext
 def close_connection(exception):
@@ -175,6 +177,29 @@ def close_connection(exception):
     if db is not None:
         print("TRAZA: Cerrando conexión a la BD")
         db.close()
+
+import hashlib
+
+def crear_usuario_prueba():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    nombre = "admin"
+    password = "123456"
+    password_hash = hashlib.sha256(password.encode()).hexdigest()
+
+    try:
+        cursor.execute("INSERT INTO usuarios (nombre, password_hash) VALUES (?, ?)", (nombre, password_hash))
+        conn.commit()
+        print("Usuario de prueba creado: admin / 123456")
+    except sqlite3.IntegrityError:
+        print("El usuario ya existe.")
+    finally:
+        conn.close()
+
+# Llamar esta función al inicio para crear el usuario
+with app.app_context():
+    crear_usuario_prueba()
 
 
 if __name__ == '__main__':
