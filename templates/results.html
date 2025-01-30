@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados de Coincidencias</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f7f7f7;
+            font-family: Arial, sans-serif;
+        }
+        .results-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .result-header {
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .result-body {
+            font-size: 1.2em;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="results-container">
+        <div class="result-header">
+            Coincidencias entre los usuarios
+        </div>
+        <div class="result-body">
+            <p>Has tenido {{ coincidencias }} coincidencias.</p>
+            <p>Tu porcentaje de coincidencias es: {{ porcentaje }}%</p>
+        </div>
+        <div class="text-center">
+            <a href="/questions" class="btn btn-primary">Volver a responder</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

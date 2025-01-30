@@ -30,14 +30,14 @@
 <body>
     <div class="questions-container">
         <h1 class="text-center">Responde las siguientes preguntas:</h1>
-        <form method="post" action="/login">
+        <form method="post" action="/questions">
             {% for pregunta in preguntas %}
                 <div class="question">
                     <div class="question-text">
                         {{ pregunta['texto'] }}
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="respuesta_{{ pregunta['id'] }}" value="NO">
+                        <input class="form-check-input" type="radio" name="respuesta_{{ pregunta['id'] }}" value="NO" required>
                         <label class="form-check-label">NO</label>
                     </div>
                     <div class="form-check">

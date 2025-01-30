@@ -39,6 +39,26 @@
                     "valor": 2
                 }
             ]
+        },
+        {
+            "texto": "¿Prefieres el asado a la pizza?",
+            "categoria": "entretenimiento",
+            "nivel": "medio",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
         }
     ]
 }
