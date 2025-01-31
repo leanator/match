@@ -172,4 +172,5 @@ cython_debug/
 
 #USER ADD
 project.tar.gz
-temporary.db
+database.db
+*.db

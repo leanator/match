@@ -1,4 +1,4 @@
-rm -rf *.gz; tar --exclude='venv' --exclude='.git' --exclude='__pycache__' --exclude='temporary.db' -czf project.tar.gz *
+rm -rf *.gz; tar --exclude='venv' --exclude='.git' --exclude='__pycache__' --exclude='database.db' -czf project.tar.gz *
 
 /mi_app
   ├── config.yaml        # Archivo de configuración (base de datos, nombre de app, etc.)

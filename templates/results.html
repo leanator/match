@@ -1,37 +1,103 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="container mt-4">
-        <div class="results-container p-4 shadow-sm rounded bg-white">
-            <div class="result-header text-center">
-                <h2>Coincidencias entre los usuarios</h2>
-            </div>
-            <div class="result-body text-center">
-                <p>Has tenido <strong>{{ coincidencias }}</strong> coincidencias.</p>
-                <p>Tu porcentaje de coincidencias es: <strong>{{ porcentaje }}%</strong></p>
-            </div>
-            <div class="text-center">
-                <a href="/questions" class="btn btn-primary">Volver a responder</a>
-            </div>
-        </div>
+  <div class="container mt-5">
+    <h2>Coincidencias entre los usuarios</h2>
+
+    <!-- Sección de coincidencias plenas -->
+    <div class="text-success">
+      <h4>Coincidencias Plenas: {{ coincidencias_plenas | length }}</h4>
+      <button class="btn btn-success" data-toggle="modal" data-target="#modalCoincidenciasPlenas">Ver preguntas</button>
     </div>
 
-    <style>
-        .results-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 30px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-        }
-        .result-header h2 {
-            font-size: 2rem;
-            color: #007bff;
-        }
-        .result-body p {
-            font-size: 1.2rem;
-            color: #555;
-        }
-    </style>
+    <!-- Modal de Coincidencias Plenas -->
+    <div class="modal fade" id="modalCoincidenciasPlenas" tabindex="-1" role="dialog" aria-labelledby="modalCoincidenciasPlenasLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalCoincidenciasPlenasLabel">Preguntas con Coincidencias Plenas</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <ul>
+              {% for pregunta in coincidencias_plenas %}
+                <li>{{ pregunta }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección de coincidencias parciales -->
+    <div class="text-warning">
+      <h4>Coincidencias Parciales: {{ coincidencias_parciales | length }}</h4>
+      <button class="btn btn-warning" data-toggle="modal" data-target="#modalCoincidenciasParciales">Ver preguntas</button>
+    </div>
+
+    <!-- Modal de Coincidencias Parciales -->
+    <div class="modal fade" id="modalCoincidenciasParciales" tabindex="-1" role="dialog" aria-labelledby="modalCoincidenciasParcialesLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalCoincidenciasParcialesLabel">Preguntas con Coincidencias Parciales</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <ul>
+              {% for pregunta in coincidencias_parciales %}
+                <li>{{ pregunta }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección de no coincidencias -->
+    <div class="text-danger">
+      <h4>No Coincidencias: {{ no_coincidencias | length }}</h4>
+      <button class="btn btn-danger" data-toggle="modal" data-target="#modalNoCoincidencias">Ver preguntas</button>
+    </div>
+
+    <!-- Modal de No Coincidencias -->
+    <div class="modal fade" id="modalNoCoincidencias" tabindex="-1" role="dialog" aria-labelledby="modalNoCoincidenciasLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalNoCoincidenciasLabel">Preguntas sin Coincidencias</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <ul>
+              {% for pregunta in no_coincidencias %}
+                <li>{{ pregunta }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botones para volver -->
+    <div class="mt-3">
+      <a href="/questions" class="btn btn-primary">Volver a las preguntas</a>
+      <a href="/find_partner" class="btn btn-secondary">Volver a configurar pareja</a>
+    </div>
+  </div>
 {% endblock %}

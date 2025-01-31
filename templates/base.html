@@ -5,40 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aplicación</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    
     <style>
         body {
             background-color: #f7f7f7;
             font-family: Arial, sans-serif;
         }
+
+        .dropdown-menu {
+            position: absolute;  /* Hace que el menú se muestre sobre el contenido */
+            z-index: 1050;       /* Asegura que el dropdown se quede encima del contenido */
+        }
     </style>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
 </head>
 <body>
 
-    <!-- Desplegable persistente -->
+    <!-- Menú superior -->
     {% if 'usuario_id' in session %}
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">App</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
-                            {{ session['nombre'] }}
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Cerrar sesión</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('find_partner') }}">Buscar pareja</a></li> <!-- Enlace a la búsqueda de pareja -->
-                        </ul>
-                    </li>
-                </ul>
-            </div>
+            <!-- Menú de la izquierda con nombre de la app y opciones -->
+            <a class="nav-link dropdown-toggle" href="#" id="navbarApp" role="button" data-toggle="dropdown" aria-expanded="false">
+                App
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarApp">
+                <li><a class="dropdown-item" href="{{ url_for('questions') }}">Preguntas</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('results') }}">Comparativa con pareja</a></li>
+            </ul>
+
+            <!-- Menú de usuario a la derecha -->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+                        {{ session['nombre'] }}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Cerrar sesión</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('find_partner') }}">Configurar pareja</a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </nav>
-{% endif %}
-
+    {% endif %}
 
     <!-- Bloque de contenido específico de cada página -->
     <div class="container mt-4">

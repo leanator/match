@@ -5,10 +5,10 @@ import hashlib
 auth = Blueprint('auth', __name__)
 
 def get_db_connection():  # Define a function to establish a database connection
-    conn = sqlite3.connect('temporary.db')  # Create a connection to the SQLite database file 'temporary.db'
+    conn = sqlite3.connect('database.db')  # Create a connection to the SQLite database file 'database.db'
     conn.row_factory = sqlite3.Row  # Set the row factory to return rows as dictionary-like objects
     return conn  # Return the database connection objectdef get_db_connection():
-    conn = sqlite3.connect('temporary.db')
+    conn = sqlite3.connect('database.db')
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -83,7 +83,7 @@ import hashlib  # Import the hashlib module for hashing passwords
 auth = Blueprint('auth', __name__)  # Create a Blueprint named 'auth' for authentication-related routes
 
 def get_db_connection():  # Define a function to establish a database connection
-    conn = sqlite3.connect('temporary.db')  # Create a connection to the SQLite database file 'temporary.db'
+    conn = sqlite3.connect('database.db')  # Create a connection to the SQLite database file 'database.db'
     conn.row_factory = sqlite3.Row  # Set the row factory to return rows as dictionary-like objects
     return conn  # Return the database connection object
 
