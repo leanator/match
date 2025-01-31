@@ -174,3 +174,4 @@ cython_debug/
 project.tar.gz
 database.db
 *.db
+nohup
