@@ -1,49 +1,37 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultados de Coincidencias</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-4">
+        <div class="results-container p-4 shadow-sm rounded bg-white">
+            <div class="result-header text-center">
+                <h2>Coincidencias entre los usuarios</h2>
+            </div>
+            <div class="result-body text-center">
+                <p>Has tenido <strong>{{ coincidencias }}</strong> coincidencias.</p>
+                <p>Tu porcentaje de coincidencias es: <strong>{{ porcentaje }}%</strong></p>
+            </div>
+            <div class="text-center">
+                <a href="/questions" class="btn btn-primary">Volver a responder</a>
+            </div>
+        </div>
+    </div>
+
     <style>
-        body {
-            background-color: #f7f7f7;
-            font-family: Arial, sans-serif;
-        }
         .results-container {
             max-width: 800px;
             margin: 0 auto;
             padding: 30px;
-            background-color: white;
+            background-color: #fff;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         }
-        .result-header {
-            font-size: 2em;
-            margin-bottom: 20px;
-            text-align: center;
+        .result-header h2 {
+            font-size: 2rem;
+            color: #007bff;
         }
-        .result-body {
-            font-size: 1.2em;
-            text-align: center;
+        .result-body p {
+            font-size: 1.2rem;
+            color: #555;
         }
     </style>
-</head>
-<body>
-    <div class="results-container">
-        <div class="result-header">
-            Coincidencias entre los usuarios
-        </div>
-        <div class="result-body">
-            <p>Has tenido {{ coincidencias }} coincidencias.</p>
-            <p>Tu porcentaje de coincidencias es: {{ porcentaje }}%</p>
-        </div>
-        <div class="text-center">
-            <a href="/questions" class="btn btn-primary">Volver a responder</a>
-        </div>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+{% endblock %}

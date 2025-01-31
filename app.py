@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, g, session
+from flask import Flask, render_template, request, redirect, g, session, url_for
 from auth import auth
 
 import sqlite3
@@ -88,39 +88,57 @@ def home():
 def questions():
     conn = get_db_connection()
     cursor = conn.cursor()
-    print("TRAZA: Entro a questions")
+
+    usuario_id = session.get('usuario_id')
+
+    # Obtener las preguntas que aún no han sido respondidas por el usuario
+    cursor.execute("""
+        SELECT id, texto FROM preguntas
+        WHERE id NOT IN (SELECT pregunta_id FROM respuestas WHERE usuario_id = ?)
+        ORDER BY id ASC
+        LIMIT 1
+    """, (usuario_id,))
+    
+    pregunta = cursor.fetchone()
+
+    # Obtener el total de preguntas
+    cursor.execute("SELECT COUNT(*) FROM preguntas")
+    total_preguntas = cursor.fetchone()[0]
+
+    # Obtener cuántas preguntas ha respondido el usuario
+    cursor.execute("SELECT COUNT(*) FROM respuestas WHERE usuario_id = ?", (usuario_id,))
+    preguntas_respuestas = cursor.fetchone()[0]
+
+    # Calcular las preguntas pendientes
+    preguntas_pendientes = total_preguntas - preguntas_respuestas
 
     if request.method == "POST":
-        print("TRAZA: Entro a questions - POST")
-        usuario_id = random.randint(1, 1000)
-
-        preguntas = load_questions()
-        print("TRAZA: Preguntas cargadas:", preguntas)
-
-        for pregunta in preguntas:
-            if "id" not in pregunta:
-                print("TRAZA: ERROR: Pregunta sin ID:", pregunta)
-                continue
-
+        if pregunta:  # Si hay una pregunta para mostrar
             respuesta = request.form.get(f"respuesta_{pregunta['id']}")
             if respuesta:
                 valor_respuesta = 0 if respuesta == "NO" else 1 if respuesta == "TAL VEZ" else 2
-                cursor.execute("INSERT INTO respuestas (pregunta_id, usuario_id, texto, valor) VALUES (?, ?, ?, ?)",
-                               (pregunta['id'], usuario_id, respuesta, valor_respuesta))
+                cursor.execute("""
+                    INSERT INTO respuestas (pregunta_id, usuario_id, texto, valor)
+                    VALUES (?, ?, ?, ?)
+                """, (pregunta['id'], usuario_id, respuesta, valor_respuesta))
+                conn.commit()
 
-        conn.commit()
+            # Obtener la siguiente pregunta
+            return redirect(url_for('questions'))
 
-        cursor.execute("SELECT * FROM respuestas")
-        respuestas_guardadas = [dict(row) for row in cursor.fetchall()] 
-        
-        print("TRAZA: Respuestas guardadas:", respuestas_guardadas)
+        else:  # Si no hay más preguntas, redirigir a los resultados
+            return redirect('/results')
 
-        return redirect('/results')
+    # Si hay una pregunta pendiente, mostrarla
+    if pregunta:
+        conn.close()
+        return render_template('questions.html', pregunta=pregunta, total_preguntas=total_preguntas, preguntas_respuestas=preguntas_respuestas, preguntas_pendientes=preguntas_pendientes)
 
-    cursor.execute("SELECT id, texto FROM preguntas")
-    preguntas = cursor.fetchall()
+    # Si no hay preguntas pendientes, redirigir a los resultados
     conn.close()
-    return render_template('questions.html', preguntas=preguntas)
+    return redirect('/results')
+
+
 
 
 

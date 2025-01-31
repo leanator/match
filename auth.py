@@ -68,8 +68,7 @@ def login():
     return render_template('login.html')
 
 
-@auth.route('/logout')
-def logout():@auth.route('/logout')  # Define a route for the logout function at the URL endpoint '/logout'
+@auth.route('/logout')  # Define a route for the logout function at the URL endpoint '/logout'
 def logout():  # Define the logout function
     session.clear()  # Clear all data from the session, effectively logging the user out
     flash("Has cerrado sesión.", "info")  # Flash a message to the user indicating they have logged out
@@ -113,34 +112,35 @@ def register():  # Define the register function
 
     return render_template('register.html')  # Render the registration template for a GET request
 
-@auth.route('/login', methods=['GET', 'POST'])  # Define a route for user login that accepts GET and POST requests
-def login():  # Define the login function
-    if request.method == 'POST':  # Check if the request method is POST
-        nombre = request.form.get('nombre')  # Retrieve the 'nombre' form data submitted by the user
-        password = request.form.get('password')  # Retrieve the 'password' form data submitted by the user
+@auth.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        nombre = request.form.get('nombre')
+        password = request.form.get('password')
 
-        if not nombre or not password:  # Check if 'nombre' or 'password' are not provided
-            flash("Debes ingresar usuario y contraseña.", "danger")  # Flash an error message indicating that both fields are required
-            return redirect(url_for('auth.login'))  # Redirect back to the login page
+        if not nombre or not password:
+            flash("Debes ingresar usuario y contraseña.", "danger")
+            return redirect(url_for('auth.login'))  # Redirigir para evitar mostrar el mensaje antes de la interacción
 
-        password_hash = hash_password(password)  # Hash the provided password
+        password_hash = hash_password(password)
 
-        conn = get_db_connection()  # Get a database connection
-        cursor = conn.cursor()  # Create a cursor object to execute SQL commands
-        cursor.execute("SELECT * FROM usuarios WHERE nombre = ? AND password_hash = ?", (nombre, password_hash))  # Query the database for the user with the provided name and hashed password
-        user = cursor.fetchone()  # Fetch a single user record from the query result
-        conn.close()  # Close the database connection
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM usuarios WHERE nombre = ? AND password_hash = ?", (nombre, password_hash))
+        user = cursor.fetchone()
+        conn.close()
 
-        if user:  # Check if a user record was found
-            session['usuario_id'] = user['id']  # Store the user's ID in the session
-            session['nombre'] = user['nombre']  # Store the user's name in the session
-            flash("Inicio de sesión exitoso.", "success")  # Flash a success message indicating a successful login
-            return redirect(url_for('questions'))  # Redirect the user to the questions page
-        else:  # If no user was found
-            flash("Credenciales incorrectas.", "danger")  # Flash an error message indicating incorrect credentials
-            return redirect(url_for('auth.login'))  # Redirect back to the login page
+        if user:
+            session['usuario_id'] = user['id']
+            session['nombre'] = user['nombre']
+            flash("Inicio de sesión exitoso.", "success")  # Solo se muestra si las credenciales son correctas
+            return redirect(url_for('questions'))
+        else:
+            flash("Credenciales incorrectas.", "danger")  # Solo se muestra si las credenciales son incorrectas
+            return redirect(url_for('auth.login'))
 
-    return render_template('login.html')  # Render the login template for a GET request
+    return render_template('login.html')  # Solo renderiza el formulario si el método es GET
+
 
 
 
