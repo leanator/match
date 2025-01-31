@@ -245,4 +245,4 @@ if __name__ == '__main__':
     # Inicializar la base de datos dentro del contexto de la app
     with app.app_context():
         initialize_db()
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)
