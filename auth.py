@@ -90,27 +90,36 @@ def get_db_connection():  # Define a function to establish a database connection
 def hash_password(password):  # Define a function to hash passwords
     return hashlib.sha256(password.encode()).hexdigest()  # Hash the given password using SHA-256 and return the hexadecimal digest
 
-@auth.route('/register', methods=['GET', 'POST'])  # Define a route for user registration that accepts GET and POST requests
-def register():  # Define the register function
-    if request.method == 'POST':  # Check if the request method is POST
-        nombre = request.form['nombre']  # Retrieve the 'nombre' form data submitted by the user
-        password = request.form['password']  # Retrieve the 'password' form data submitted by the user
-        password_hash = hash_password(password)  # Hash the password using the hash_password function
+@auth.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        password = request.form['password']
+        password_hash = hash_password(password)
 
-        conn = get_db_connection()  # Get a database connection
-        cursor = conn.cursor()  # Create a cursor object to execute SQL commands
+        conn = get_db_connection()
+        cursor = conn.cursor()
 
-        try:  # Start a try block to handle potential exceptions
-            cursor.execute("INSERT INTO usuarios (nombre, password_hash) VALUES (?, ?)", (nombre, password_hash))  # Insert the user's name and hashed password into the 'usuarios' table
-            conn.commit()  # Commit the changes to the database
-            flash("Registro exitoso. Ahora puedes iniciar sesión.", "success")  # Flash a success message to the user
-            return redirect(url_for('auth.login'))  # Redirect the user to the login page
-        except sqlite3.IntegrityError:  # Handle the case where a unique constraint is violated (i.e., user already exists)
-            flash("El usuario ya existe.", "danger")  # Flash an error message indicating the user already exists
-        finally:  # Ensure this block runs whether an exception occurred or not
-            conn.close()  # Close the database connection
+        try:
+            # Asegurarnos de que el nombre de usuario sea único
+            cursor.execute("SELECT * FROM usuarios WHERE nombre = ?", (nombre,))
+            existing_user = cursor.fetchone()
+            if existing_user:
+                flash("El usuario ya existe.", "danger")
+                return redirect(url_for('auth.register'))
 
-    return render_template('register.html')  # Render the registration template for a GET request
+            # Guardar el nuevo usuario
+            cursor.execute("INSERT INTO usuarios (nombre, password_hash) VALUES (?, ?)", (nombre, password_hash))
+            conn.commit()
+            flash("Registro exitoso. Ahora puedes iniciar sesión.", "success")
+            return redirect(url_for('auth.login'))
+        except sqlite3.IntegrityError:
+            flash("Hubo un error al registrar el usuario.", "danger")
+        finally:
+            conn.close()
+
+    return render_template('register.html')
+
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():

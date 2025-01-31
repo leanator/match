@@ -141,3 +141,29 @@ A largo plazo, se integrará una funcionalidad que permitirá que los usuarios g
 Este diseño cubre todos los aspectos clave de la aplicación, y ahora puedes usarlo como referencia para guiar el desarrollo de la app. Cuando estés listo para avanzar en la implementación, podemos seguir estructurando los pasos de desarrollo y revisando los detalles técnicos necesarios.
 
 ---
+
+
+1. Base de datos de usuarios
+Vamos a crear una tabla usuarios en la base de datos con los siguientes campos:
+
+id: Identificador único del usuario (autoincremental).
+nombre: Nombre de usuario (único).
+email: Correo electrónico del usuario (único, aunque por ahora solo como dato).
+password_hash: Contraseña del usuario almacenada de forma segura (hash).
+fecha_registro: Fecha en la que el usuario se registró.
+2. Ruta de Registro
+Implementamos una ruta de registro que permita a los usuarios crear una cuenta con los siguientes pasos:
+
+Verificación de que los campos (nombre, correo, contraseña) sean válidos.
+Validación de que el nombre de usuario y el correo no estén ya en la base de datos.
+Encriptación de la contraseña con hash.
+Creación del usuario en la base de datos.
+Módulo "dummy" de verificación de correo electrónico que simplemente devuelva un OK.
+3. Ruta de Login
+Creamos una ruta de login que permita a los usuarios iniciar sesión con su nombre de usuario o correo y contraseña. Si las credenciales son correctas, iniciamos la sesión.
+
+4. Módulo Dummy de Verificación de Correo
+Este módulo se encargará de "verificar" que el correo electrónico es válido, pero solo devolverá un "OK" siempre.
+
+5. Pantalla de Perfil del Usuario (Opcional)
+Luego de que el usuario se loguee, podrá acceder a su perfil y modificar la información si lo desea (por ejemplo, cambiar la contraseña).

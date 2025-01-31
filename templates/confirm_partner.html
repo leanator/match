@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="text-center">Confirmar Emparejamiento</h2>
+
+        <p class="text-center">¿Estás seguro de que deseas emparejarte con {{ partner_name }}?</p>
+
+        <form method="POST" action="/results">
+            <input type="hidden" name="partner_id" value="{{ partner_id }}">
+            <div class="text-center">
+                <button type="submit" class="btn btn-success">Confirmar Emparejamiento</button>
+            </div>
+        </form>
+
+        <div class="text-center mt-3">
+            <a href="{{ url_for('find_partner') }}" class="btn btn-danger">Cancelar</a>
+        </div>
+    </div>
+{% endblock %}

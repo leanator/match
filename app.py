@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, g, session, url_for
+from flask import Flask, render_template, request, redirect, g, session, url_for, flash
 from auth import auth
 
 import sqlite3
@@ -185,6 +185,26 @@ def results():
 
 
 
+
+@app.route('/find_partner', methods=["GET", "POST"])
+def find_partner():
+    if request.method == 'POST':
+        partner_name = request.form['partner_name']
+        
+        # Verificar si el nombre ingresado coincide con algún usuario en la base de datos
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, nombre FROM usuarios WHERE nombre = ?", (partner_name,))
+        partner = cursor.fetchone()
+        conn.close()
+
+        if partner:
+            # Si hay coincidencia, mostrar mensaje de confirmación
+            return render_template('confirm_partner.html', partner_name=partner_name, partner_id=partner['id'])
+        else:
+            flash("No se encontró ningún usuario con ese nombre.", "danger")
+    
+    return render_template('find_partner.html')
 
 
 
