@@ -59,6 +59,746 @@
                     "valor": 2
                 }
             ]
+        },
+        {
+            "texto": "¿Te gustan los deportes al aire libre?",
+            "categoria": "entretenimiento",
+            "nivel": "bajo",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Te gusta leer libros de ficción?",
+            "categoria": "entretenimiento",
+            "nivel": "medio",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Prefieres las vacaciones en la playa a las de montaña?",
+            "categoria": "entretenimiento",
+            "nivel": "medio",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Te gustan las películas de terror?",
+            "categoria": "entretenimiento",
+            "nivel": "bajo",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Usas redes sociales a diario?",
+            "categoria": "entretenimiento",
+            "nivel": "bajo",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Prefieres la comida casera a la comida rápida?",
+            "categoria": "entretenimiento",
+            "nivel": "bajo",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Tienes una mascota?",
+            "categoria": "entretenimiento",
+            "nivel": "bajo",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Te gusta cocinar?",
+            "categoria": "entretenimiento",
+            "nivel": "bajo",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Eres fan de la música clásica?",
+            "categoria": "entretenimiento",
+            "nivel": "medio",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Te gustaría vivir en otro país?",
+            "categoria": "entretenimiento",
+            "nivel": "medio",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Prefieres el invierno al verano?",
+            "categoria": "entretenimiento",
+            "nivel": "bajo",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Te gustan los videojuegos de rol?",
+            "categoria": "entretenimiento",
+            "nivel": "medio",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Te apasionan los temas de ciencia ficción?",
+            "categoria": "entretenimiento",
+            "nivel": "medio",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Te gustan los documentales de naturaleza?",
+            "categoria": "entretenimiento",
+            "nivel": "bajo",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Eres una persona madrugadora?",
+            "categoria": "entretenimiento",
+            "nivel": "medio",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Te gustan los parques temáticos?",
+            "categoria": "entretenimiento",
+            "nivel": "bajo",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Te consideras una persona optimista?",
+            "categoria": "entretenimiento",
+            "nivel": "medio",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Te gustaría aprender a tocar un instrumento musical?",
+            "categoria": "entretenimiento",
+            "nivel": "medio",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Prefieres viajar en avión a viajar en tren?",
+            "categoria": "entretenimiento",
+            "nivel": "bajo",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Te gusta ver series de comedia?",
+            "categoria": "entretenimiento",
+            "nivel": "bajo",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Te gusta hacer ejercicio en el gimnasio?",
+            "categoria": "entretenimiento",
+            "nivel": "medio",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Te gustan los animales salvajes?",
+            "categoria": "entretenimiento",
+            "nivel": "bajo",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Eres un aficionado a la fotografía?",
+            "categoria": "entretenimiento",
+            "nivel": "medio",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Te gusta ir de camping?",
+            "categoria": "entretenimiento",
+            "nivel": "bajo",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Prefieres la pizza con piña?",
+            "categoria": "entretenimiento",
+            "nivel": "bajo",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Te gustan los videojuegos de acción?",
+            "categoria": "entretenimiento",
+            "nivel": "medio",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Te consideras una persona introvertida?",
+            "categoria": "entretenimiento",
+            "nivel": "bajo",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Te interesa aprender sobre astronomía?",
+            "categoria": "entretenimiento",
+            "nivel": "medio",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Te gusta el arte moderno?",
+            "categoria": "entretenimiento",
+            "nivel": "medio",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Prefieres las películas románticas a las de acción?",
+            "categoria": "entretenimiento",
+            "nivel": "bajo",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Te gustan los videojuegos de aventura?",
+            "categoria": "entretenimiento",
+            "nivel": "medio",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Tienes miedo a volar en avión?",
+            "categoria": "entretenimiento",
+            "nivel": "bajo",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Te gustan las actividades acuáticas como el surf?",
+            "categoria": "entretenimiento",
+            "nivel": "bajo",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Eres fanático de los cómics?",
+            "categoria": "entretenimiento",
+            "nivel": "medio",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Te interesa la política?",
+            "categoria": "entretenimiento",
+            "nivel": "medio",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Te gustaría aprender un nuevo idioma?",
+            "categoria": "entretenimiento",
+            "nivel": "medio",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
+        },
+        {
+            "texto": "¿Prefieres el chocolate oscuro al chocolate con leche?",
+            "categoria": "entretenimiento",
+            "nivel": "bajo",
+            "estado": "activa",
+            "respuestas": [
+                {
+                    "texto": "NO",
+                    "valor": 0
+                },
+                {
+                    "texto": "TAL VEZ",
+                    "valor": 1
+                },
+                {
+                    "texto": "SÍ",
+                    "valor": 2
+                }
+            ]
         }
     ]
 }
