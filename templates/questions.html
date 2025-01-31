@@ -1,6 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+    .btn-lg-custom {
+        flex: 1;
+        margin: 5px;
+        padding: 20px;
+        font-size: 1.5rem;
+    }
+    .btn-container {
+        display: flex;
+        justify-content: center;
+    }
+</style>
+
 <div class="questions-container">
     <h1 class="text-center">Responde las siguientes preguntas</h1>
     
@@ -15,14 +28,14 @@
     <form method="post" action="/questions">
         <div class="question text-center">
             <!-- Centrar la pregunta -->
-            <h3>{{ pregunta['texto'] }}</h3>
+            <h3>{{ pregunta[1] }}</h3>
         </div>
         
         <!-- Botones de respuesta -->
-        <div class="text-center mt-4">
-            <button type="submit" name="respuesta_{{ pregunta['id'] }}" value="NO" class="btn btn-danger btn-lg">NO</button>
-            <button type="submit" name="respuesta_{{ pregunta['id'] }}" value="TAL VEZ" class="btn btn-warning btn-lg">TAL VEZ</button>
-            <button type="submit" name="respuesta_{{ pregunta['id'] }}" value="SÍ" class="btn btn-success btn-lg">SÍ</button>
+        <div class="btn-container mt-4">
+            <button type="submit" name="respuesta" value="NO" class="btn btn-danger btn-lg btn-lg-custom">NO</button>
+            <button type="submit" name="respuesta" value="TAL VEZ" class="btn btn-warning btn-lg btn-lg-custom">TAL VEZ</button>
+            <button type="submit" name="respuesta" value="SÍ" class="btn btn-success btn-lg btn-lg-custom">SÍ</button>
         </div>
     </form>
 </div>
