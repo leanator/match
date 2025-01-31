@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, render_template, request, redirect, g
+from flask import Flask, render_template, request, redirect, g, session, url_for, flash
+from auth import auth
+
 import sqlite3
 import json
 import random
 
 app = Flask(__name__)
+app.secret_key = "clave_secreta_super_segura"  # Cambiar por algo seguro en producción
+app.register_blueprint(auth)
 
 # Conexión a la base de datos (archivo temporal persistente durante la ejecución)
 def get_db_connection():
@@ -29,44 +33,47 @@ def load_questions():
 import os
 import json
 import os
-
 def initialize_db():
-    with app.app_context():  # Asegurar que la BD se inicializa en el contexto de Flask
+    with app.app_context():
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        # Verificar si la tabla 'preguntas' existe
-        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='preguntas';")
-        table_exists = cursor.fetchone()
+        # Crear la tabla de usuarios si no existe
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS usuarios (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nombre TEXT UNIQUE NOT NULL,
+            password_hash TEXT NOT NULL
+        );
+        """)
 
-        # Si la tabla no existe, la creamos
-        if not table_exists:
-            cursor.execute("""
-            CREATE TABLE preguntas (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                texto TEXT NOT NULL,
-                categoria TEXT NOT NULL,
-                nivel TEXT NOT NULL,
-                estado TEXT CHECK(estado IN ('activa', 'editada', 'eliminada')) DEFAULT 'activa',
-                origen TEXT CHECK(origen IN ('predefinida', 'generada'))
-            );
-            """)
+        # Crear la tabla de preguntas si no existe
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS preguntas (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            texto TEXT NOT NULL,
+            categoria TEXT NOT NULL,
+            nivel TEXT NOT NULL,
+            estado TEXT CHECK(estado IN ('activa', 'editada', 'eliminada')) DEFAULT 'activa',
+            origen TEXT CHECK(origen IN ('predefinida', 'generada'))
+        );
+        """)
 
-        # Verificar si la tabla está vacía
-        cursor.execute("SELECT COUNT(*) FROM preguntas")
-        if cursor.fetchone()[0] == 0:
-            json_path = os.path.join("data", "questions_data.json")
-            if os.path.exists(json_path):
-                with open(json_path, "r", encoding="utf-8") as file:
-                    preguntas_json = json.load(file).get("preguntas", [])
-
-                for pregunta in preguntas_json:
-                    cursor.execute(
-                        "INSERT INTO preguntas (texto, categoria, nivel, estado, origen) VALUES (?, ?, ?, ?, ?)",
-                        (pregunta["texto"], pregunta["categoria"], pregunta["nivel"], pregunta["estado"], "predefinida")
-                    )
+        # Crear la tabla de respuestas si no existe
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS respuestas (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            pregunta_id INTEGER,
+            usuario_id INTEGER,
+            texto TEXT NOT NULL,
+            valor INTEGER NOT NULL,
+            FOREIGN KEY (pregunta_id) REFERENCES preguntas(id),
+            FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+        );
+        """)
 
         conn.commit()
+
 
 
 
@@ -82,39 +89,57 @@ def home():
 def questions():
     conn = get_db_connection()
     cursor = conn.cursor()
-    print("TRAZA: Entro a questions")
+
+    usuario_id = session.get('usuario_id')
+
+    # Obtener las preguntas que aún no han sido respondidas por el usuario
+    cursor.execute("""
+        SELECT id, texto FROM preguntas
+        WHERE id NOT IN (SELECT pregunta_id FROM respuestas WHERE usuario_id = ?)
+        ORDER BY id ASC
+        LIMIT 1
+    """, (usuario_id,))
+    
+    pregunta = cursor.fetchone()
+
+    # Obtener el total de preguntas
+    cursor.execute("SELECT COUNT(*) FROM preguntas")
+    total_preguntas = cursor.fetchone()[0]
+
+    # Obtener cuántas preguntas ha respondido el usuario
+    cursor.execute("SELECT COUNT(*) FROM respuestas WHERE usuario_id = ?", (usuario_id,))
+    preguntas_respuestas = cursor.fetchone()[0]
+
+    # Calcular las preguntas pendientes
+    preguntas_pendientes = total_preguntas - preguntas_respuestas
 
     if request.method == "POST":
-        print("TRAZA: Entro a questions - POST")
-        usuario_id = random.randint(1, 1000)
-
-        preguntas = load_questions()
-        print("TRAZA: Preguntas cargadas:", preguntas)
-
-        for pregunta in preguntas:
-            if "id" not in pregunta:
-                print("TRAZA: ERROR: Pregunta sin ID:", pregunta)
-                continue
-
+        if pregunta:  # Si hay una pregunta para mostrar
             respuesta = request.form.get(f"respuesta_{pregunta['id']}")
             if respuesta:
                 valor_respuesta = 0 if respuesta == "NO" else 1 if respuesta == "TAL VEZ" else 2
-                cursor.execute("INSERT INTO respuestas (pregunta_id, usuario_id, texto, valor) VALUES (?, ?, ?, ?)",
-                               (pregunta['id'], usuario_id, respuesta, valor_respuesta))
+                cursor.execute("""
+                    INSERT INTO respuestas (pregunta_id, usuario_id, texto, valor)
+                    VALUES (?, ?, ?, ?)
+                """, (pregunta['id'], usuario_id, respuesta, valor_respuesta))
+                conn.commit()
 
-        conn.commit()
+            # Obtener la siguiente pregunta
+            return redirect(url_for('questions'))
 
-        cursor.execute("SELECT * FROM respuestas")
-        respuestas_guardadas = [dict(row) for row in cursor.fetchall()] 
-        
-        print("TRAZA: Respuestas guardadas:", respuestas_guardadas)
+        else:  # Si no hay más preguntas, redirigir a los resultados
+            return redirect('/results')
 
-        return redirect('/results')
+    # Si hay una pregunta pendiente, mostrarla
+    if pregunta:
+        conn.close()
+        return render_template('questions.html', pregunta=pregunta, total_preguntas=total_preguntas, preguntas_respuestas=preguntas_respuestas, preguntas_pendientes=preguntas_pendientes)
 
-    cursor.execute("SELECT id, texto FROM preguntas")
-    preguntas = cursor.fetchall()
+    # Si no hay preguntas pendientes, redirigir a los resultados
     conn.close()
-    return render_template('questions.html', preguntas=preguntas)
+    return redirect('/results')
+
+
 
 
 
@@ -162,13 +187,28 @@ def results():
 
 
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
+@app.route('/find_partner', methods=["GET", "POST"])
+def find_partner():
     if request.method == 'POST':
-        # Aquí puedes implementar la lógica de inicio de sesión
-        # Por ahora solo redirigimos a '/questions'
-        return redirect('/questions')
-    return render_template('login.html')  # Renderiza un archivo login.html (puedes personalizarlo luego)
+        partner_name = request.form['partner_name']
+        
+        # Verificar si el nombre ingresado coincide con algún usuario en la base de datos
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, nombre FROM usuarios WHERE nombre = ?", (partner_name,))
+        partner = cursor.fetchone()
+        conn.close()
+
+        if partner:
+            # Si hay coincidencia, mostrar mensaje de confirmación
+            return render_template('confirm_partner.html', partner_name=partner_name, partner_id=partner['id'])
+        else:
+            flash("No se encontró ningún usuario con ese nombre.", "danger")
+    
+    return render_template('find_partner.html')
+
+
+
 
 @app.teardown_appcontext
 def close_connection(exception):
@@ -176,6 +216,29 @@ def close_connection(exception):
     if db is not None:
         print("TRAZA: Cerrando conexión a la BD")
         db.close()
+
+import hashlib
+
+def crear_usuario_prueba():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    nombre = "admin"
+    password = "123456"
+    password_hash = hashlib.sha256(password.encode()).hexdigest()
+
+    try:
+        cursor.execute("INSERT INTO usuarios (nombre, password_hash) VALUES (?, ?)", (nombre, password_hash))
+        conn.commit()
+        print("Usuario de prueba creado: admin / 123456")
+    except sqlite3.IntegrityError:
+        print("El usuario ya existe.")
+    finally:
+        conn.close()
+
+# Llamar esta función al inicio para crear el usuario
+with app.app_context():
+    crear_usuario_prueba()
 
 
 if __name__ == '__main__':
