@@ -11,8 +11,7 @@
                 <p style="color: {% if category == 'success' %}green{% else %}red{% endif %};">{{ message }}</p>
             {% endfor %}
         {% endif %}
-    {% endwith %}
-    
+        {% endwith %}
 
         <form action="/login" method="POST">
             <div class="form-group">
@@ -21,13 +20,35 @@
             </div>
             <div class="form-group">
                 <label for="password">Contraseña:</label>
-                <input type="password" class="form-control" id="password" name="password" required>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="password" name="password" required>
+                    <div class="input-group-append">
+                        <span class="input-group-text" onclick="togglePasswordVisibility('password', 'togglePasswordIcon')">
+                            <i id="togglePasswordIcon" class="fa fa-eye"></i>
+                        </span>
+                    </div>
+                </div>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
         </form>
         <p class="text-center mt-3">
             <a href="{{ url_for('auth.register') }}">¿No tienes cuenta? Regístrate</a>
         </p>
-        
     </div>
+
+    <script>
+        function togglePasswordVisibility(passwordFieldId, iconId) {
+            var passwordField = document.getElementById(passwordFieldId);
+            var icon = document.getElementById(iconId);
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            } else {
+                passwordField.type = "password";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            }
+        }
+    </script>
 {% endblock %}

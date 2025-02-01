@@ -20,9 +20,32 @@
             </div>
             <div class="form-group">
                 <label for="password">Contraseña:</label>
-                <input type="password" class="form-control" id="password" name="password" required>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="password" name="password" required>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="togglePassword" onclick="togglePasswordVisibility()">
+                            <i class="fa fa-eye" id="togglePasswordIcon"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Registrar</button>
         </form>
     </div>
+
+    <script>
+        function togglePasswordVisibility() {
+            var passwordField = document.getElementById('password');
+            var icon = document.getElementById('togglePasswordIcon');
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            } else {
+                passwordField.type = "password";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            }
+        }
+    </script>
 {% endblock %}
